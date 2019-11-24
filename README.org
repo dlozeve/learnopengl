@@ -1,0 +1,14 @@
+* Learn OpenGL
+
+Experiments around the [[https://learnopengl.com/][Learn OpenGL]] tutorial.
+
+** Build
+
+You need =glfw3= installed.
+
+#+begin_src sh
+meson build
+cd build
+ninja
+#+end_src
+
