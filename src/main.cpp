@@ -111,6 +111,9 @@ int main(int argc, char* argv[])
     // Enable vertex attributes for location 0
     glEnableVertexAttribArray(0);
 
+    // Draw in wireframe mode (GL_FILL to go back to default)
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
     while(!glfwWindowShouldClose(window)) {
 	processInput(window);
 
