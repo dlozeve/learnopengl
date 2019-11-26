@@ -7,8 +7,7 @@ Experiments around the [[https://learnopengl.com/][Learn OpenGL]] tutorial.
 You need =glfw3= installed.
 
 #+begin_src sh
-meson build
-cd build
-ninja
+meson setup --warnlevel 2 build
+ninja -C build
 #+end_src
 

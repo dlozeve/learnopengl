@@ -32,7 +32,7 @@ const char* fragmentShader2Source =
     "}\n";
 
 
-int main(int argc, char* argv[])
+int main()
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
