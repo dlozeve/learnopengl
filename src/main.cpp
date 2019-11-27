@@ -15,22 +15,14 @@ const char* vertexShaderSource = "#version 330 core\n"
     "    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0f);\n"
     "}\n";
 
-const char* fragmentShader1Source =
+const char* fragmentShaderSource =
     "#version 330 core\n"
     "out vec4 FragColor;\n"
+    "uniform vec4 ourColor;\n"
     "void main()\n"
     "{\n"
-    "    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+    "    FragColor = ourColor;\n"
     "}\n";
-
-const char* fragmentShader2Source =
-    "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main()\n"
-    "{\n"
-    "    FragColor = vec4(0.5f, 1.0f, 0.2f, 1.0f);\n"
-    "}\n";
-
 
 int main()
 {
@@ -71,7 +63,7 @@ int main()
     // Fragment shader definition
     unsigned int fragmentShader1;
     fragmentShader1 = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader1, 1, &fragmentShader1Source, NULL);
+    glShaderSource(fragmentShader1, 1, &fragmentShaderSource, NULL);
     glCompileShader(fragmentShader1);
     // Check if the shader's compilation was successful
     glGetShaderiv(fragmentShader1, GL_COMPILE_STATUS, &success);
@@ -81,7 +73,7 @@ int main()
     }
     unsigned int fragmentShader2;
     fragmentShader2 = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader2, 1, &fragmentShader2Source, NULL);
+    glShaderSource(fragmentShader2, 1, &fragmentShaderSource, NULL);
     glCompileShader(fragmentShader2);
     // Check if the shader's compilation was successful
     glGetShaderiv(fragmentShader2, GL_COMPILE_STATUS, &success);
@@ -167,10 +159,18 @@ int main()
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	float timeValue = glfwGetTime();
+	float colorValue = sin(timeValue) / 2.0f + 0.5f;
+	int vertexColorLocation1 = glGetUniformLocation(shaderProgram1, "ourColor");
+	int vertexColorLocation2 = glGetUniformLocation(shaderProgram2, "ourColor");
+
 	glUseProgram(shaderProgram1); // use the defined shaders
+	glUniform4f(vertexColorLocation1, 0.0f, colorValue, 0.0f, 1.0f);
 	glBindVertexArray(VAO1); // use the vertex attributes stored in the VAO
 	glDrawArrays(GL_TRIANGLES, 0, 3);
+
 	glUseProgram(shaderProgram2);
+	glUniform4f(vertexColorLocation2, 1.0f - colorValue, 0.0f, 0.0f, 1.0f);
 	glBindVertexArray(VAO2);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 
